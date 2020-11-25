@@ -15,10 +15,10 @@ public class Lexer {
     public static String regexPat =
             "\\s*((//.*)||([0-9]+)|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
             + "|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct})?";
-    private Pattern pattern = Pattern.compile(regexPat);
-    private ArrayList<Token> quene = new ArrayList<Token>();
+    private final Pattern pattern = Pattern.compile(regexPat);
+    private final ArrayList<Token> quene = new ArrayList<Token>();
+    private final LineNumberReader reader;
     private boolean hasMore;
-    private LineNumberReader reader;
 
     public Lexer(Reader r){
         hasMore = true;
@@ -116,6 +116,9 @@ public class Lexer {
         return sb.toString();
     }
 
+    /**
+     * 整型字面量
+     */
     protected static class NumToken extends Token {
         private int value;
 
@@ -140,6 +143,9 @@ public class Lexer {
         }
     }
 
+    /**
+     * 标识符
+     */
     protected static class IdToken extends Token {
         private String text;
 
@@ -159,6 +165,9 @@ public class Lexer {
         }
     }
 
+    /**
+     * 字符串字面量
+     */
     protected static class StrToken extends Token {
         private String literal;
         StrToken(int line, String str) {
