@@ -2,6 +2,10 @@ package stone;
 
 import java.io.IOException;
 
+/**
+ * 解析异常
+ * @author yohoyes
+ */
 public class ParseException extends Exception{
     public ParseException(Token t) {
         this("",t);
