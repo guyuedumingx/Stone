@@ -12,11 +12,11 @@ import java.util.regex.Pattern;
  * @author yohoyes
  */
 public class Lexer {
-    public static String regexPat =
-            "\\s*((//.*)||([0-9]+)|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
+    public static String regexPat
+            = "\\s*((//.*)|([0-9]+)|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
             + "|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct})?";
     private final Pattern pattern = Pattern.compile(regexPat);
-    private final ArrayList<Token> quene = new ArrayList<Token>();
+    private final ArrayList<Token> queue = new ArrayList<Token>();
     private final LineNumberReader reader;
     private boolean hasMore;
 
@@ -27,7 +27,7 @@ public class Lexer {
 
     public Token read() throws ParseException {
         if(fillQueue(0)){
-            return quene.remove(0);
+            return queue.remove(0);
         }else {
             return Token.EOF;
         }
@@ -35,14 +35,14 @@ public class Lexer {
 
     public Token peek(int i) throws ParseException {
         if(fillQueue(i)){
-            return quene.get(i);
+            return queue.get(i);
         }else {
             return Token.EOF;
         }
     }
 
     public boolean fillQueue(int i) throws ParseException {
-        while (i >= quene.size()){
+        while (i >= queue.size()){
             if(hasMore){
                 readLine();
             } else {
@@ -52,14 +52,18 @@ public class Lexer {
         return true;
     }
 
+    /**
+     *读取一行
+     * @throws ParseException
+     */
     protected void readLine() throws ParseException {
         String line;
-        try{
+        try {
             line = reader.readLine();
         } catch (IOException e) {
             throw new ParseException(e);
         }
-        if(line == null){
+        if (line == null) {
             hasMore = false;
             return;
         }
@@ -68,20 +72,20 @@ public class Lexer {
         matcher.useTransparentBounds(true).useAnchoringBounds(false);
         int pos = 0;
         int endPos = line.length();
-        while (pos < endPos){
+        while (pos < endPos) {
             matcher.region(pos, endPos);
-            if(matcher.lookingAt()) {
+            if (matcher.lookingAt()) {
                 addToken(lineNo, matcher);
                 pos = matcher.end();
             } else {
                 throw new ParseException("bad token at line " + lineNo);
             }
         }
-        quene.add(new IdToken(lineNo, Token.EOL));
+        queue.add(new IdToken(lineNo, Token.EOL));
     }
 
     protected void addToken(int lineNo, Matcher matcher) {
-        String m = matcher.group();
+        String m = matcher.group().trim();
         if(m != null){
             if(matcher.group(2) == null) {
                 Token token;
@@ -92,7 +96,7 @@ public class Lexer {
                 }else {
                     token = new IdToken(lineNo, m);
                 }
-                quene.add(token);
+                queue.add(token);
             }
         }
     }
