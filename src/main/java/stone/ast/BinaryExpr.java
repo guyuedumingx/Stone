@@ -3,6 +3,10 @@ package stone.ast;
 
 import java.util.List;
 
+/**
+ * 表示双目运算表达式
+ * such as: x + 3
+ */
 public class BinaryExpr extends ASTList {
 
     public BinaryExpr(List<ASTree> c) {
