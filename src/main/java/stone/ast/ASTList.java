@@ -5,12 +5,13 @@ import java.util.List;
 
 /**
  * 分支节点
+ *
  * @author yohoyes
  */
 public class ASTList extends ASTree {
     protected List<ASTree> children;
 
-    public ASTList (List<ASTree> list) {
+    public ASTList(List<ASTree> list) {
         children = list;
     }
 
@@ -34,7 +35,7 @@ public class ASTList extends ASTree {
         StringBuilder sb = new StringBuilder();
         sb.append('(');
         String sep = "";
-        for(ASTree t : children){
+        for (ASTree t : children) {
             sb.append(sep);
             sep = " ";
             sb.append(t.toString());
@@ -44,9 +45,9 @@ public class ASTList extends ASTree {
 
     @Override
     public String location() {
-        for(ASTree t : children) {
+        for (ASTree t : children) {
             String s = t.location();
-            if(s != null) {
+            if (s != null) {
                 return s;
             }
         }

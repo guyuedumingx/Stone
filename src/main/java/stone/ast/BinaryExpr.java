@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BinaryExpr extends ASTList {
 
-    public BinaryExpr (List<ASTree> c)   {
+    public BinaryExpr(List<ASTree> c) {
         super(c);
     }
 
@@ -14,7 +14,7 @@ public class BinaryExpr extends ASTList {
     }
 
     public String operator() {
-        return ((ASTLeaf)child(1)).token().getText();
+        return ((ASTLeaf) child(1)).token().getText();
     }
 
     public ASTree right() {

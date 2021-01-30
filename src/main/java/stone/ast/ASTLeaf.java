@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 /**
  * 叶子节点
+ *
  * @author yohoyes
  */
 public class ASTLeaf extends ASTree {

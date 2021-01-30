@@ -2,9 +2,9 @@ package stone.ast;
 
 import stone.Token;
 
-public class NumberLiteral extends ASTLeaf{
+public class NumberLiteral extends ASTLeaf {
 
-    public NumberLiteral (Token t) {
+    public NumberLiteral(Token t) {
         super(t);
     }
 

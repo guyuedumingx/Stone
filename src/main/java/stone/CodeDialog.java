@@ -38,6 +38,7 @@ public class CodeDialog extends Reader{
         System.out.println(s);
     }
 
+    @Override
     public void close() throws IOException {}
 
     public String showDialog() throws IOException {
